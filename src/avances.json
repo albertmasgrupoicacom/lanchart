@@ -1,0 +1,317 @@
+{
+    "success": true,
+    "lista": [
+            {
+                "titulo": "BAROMETRO JUNIO",
+                "preguntas": [
+                    {
+                        "titulo": "Estimación voto Andalucía",
+                        "widget": "#donut180",
+                        "categorias": [
+                            {
+                                "titulo": "PSOE",
+                                "color": "#c30011",
+                                "logo": "https:///xxxx/psoe.png",
+                                "valor": 33.0
+                            },
+                            {
+                                "titulo": "PP",
+                                "color": "#22F044",
+                                "logo": "https:///xxxx/psoe.png",
+                                "valor": 18.0
+                            },
+                            {
+                                "titulo": "SUMAR",
+                                "color": "#12FF00",
+                                "logo": "https:///xxxx/sumar.png",
+                                "valor": 10.0
+                            },
+                            {
+                                "titulo": "VOX",
+                                "color": "#AA0011",
+                                "logo": "https:///xxxx/vox.png",
+                                "valor": 13.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Nacionalidad de la persona entrevistada",
+                        "widget": "#donut360",
+                        "categorias": [
+                            {
+                                "titulo": "PSOE",
+                                "color": "#c30011",
+                                "logo": "https:///xxxx/psoe.png",
+                                "valor": 50.0
+                            },
+                            {
+                                "titulo": "SUMAR",
+                                "color": "#12FF00",
+                                "logo": "https:///xxxx/sumar.png",
+                                "valor": 10.0
+                            },
+                            {
+                                "titulo": "VOX",
+                                "color": "#AA0011",
+                                "logo": "https:///xxxx/vox.png",
+                                "valor": 13.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Nacionalidad de la persona entrevistada (extranjeros)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Valoración de la situación económica general de España",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Valoración prospectiva de la situación económica de España (1 año)",
+                        "widget": "#barh",
+                        "categorias": [
+                            {
+                                "titulo": "PSOE",
+                                "color": "rojo",
+                                "logo": "https:///xxxx/psoe.png",
+                                "valor": 23.0
+                            },
+                            {
+                                "titulo": "PP",
+                                "color": "azul",
+                                "logo": "https:///xxxx/psoe.png",
+                                "valor": 32.0
+                            },
+                            {
+                                "titulo": "SUMAR",
+                                "color": "morado",
+                                "logo": "https:///xxxx/sumar.png",
+                                "valor": 10.0
+                            },
+                            {
+                                "titulo": "VOX",
+                                "color": "verde",
+                                "logo": "https:///xxxx/vox.png",
+                                "valor": 13.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Valoración de la situación política general de España",
+                        "widget": "#donut180",
+                        "categorias": [
+                            {
+                                "titulo": "Buena",
+                                "color": "",
+                                "logo": "",
+                                "valor": 3.6
+                            },
+                            {
+                                "titulo": "Regular",
+                                "color": "",
+                                "logo": "",
+                                "valor": 21.9
+                            },
+                            {
+                                "titulo": "Mala",
+                                "color": "",
+                                "logo": "",
+                                "valor": 35.6
+                            },
+                            {
+                                "titulo": "Muy mala",
+                                "color": "",
+                                "logo": "",
+                                "valor": 35.5
+                            },
+                            {
+                                "titulo": "N.S.",
+                                "color": "",
+                                "logo": "",
+                                "valor": 2.9
+                            },
+                            {
+                                "titulo": "N.C.",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.3
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas principales que existen actualmente en España (3) (ordinal)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas principales que existen actualmente en España (MR)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas sociales que personalmente afectan más (3) (ordinal)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas sociale",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "titulo": "BAROMETRO JULIO",
+                "preguntas": [
+                    {
+                        "titulo": "Nacionalidad de la persona entrevistada",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Valoración de la situación política general de España",
+                        "widget": "#donut180",
+                        "categorias": [
+                            {
+                                "titulo": "Buena",
+                                "color": "",
+                                "logo": "",
+                                "valor": 3.6
+                            },
+                            {
+                                "titulo": "Regular",
+                                "color": "",
+                                "logo": "",
+                                "valor": 21.9
+                            },
+                            {
+                                "titulo": "Mala",
+                                "color": "",
+                                "logo": "",
+                                "valor": 35.6
+                            },
+                            {
+                                "titulo": "Muy mala",
+                                "color": "",
+                                "logo": "",
+                                "valor": 35.5
+                            },
+                            {
+                                "titulo": "N.S.",
+                                "color": "",
+                                "logo": "",
+                                "valor": 2.9
+                            },
+                            {
+                                "titulo": "N.C.",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.3
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas principales que existen actualmente en España (3) (ordinal)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas principales que existen actualmente en España (MR)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas sociales que personalmente afectan más (3) (ordinal)",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    },
+                    {
+                        "titulo": "Problemas sociale",
+                        "widget": "",
+                        "categorias": [
+                            {
+                                "titulo": "",
+                                "color": "",
+                                "logo": "",
+                                "valor": 0.0
+                            }
+                        ]
+                    }
+                ]
+            }
+
+    ],
+    "info": null
+}

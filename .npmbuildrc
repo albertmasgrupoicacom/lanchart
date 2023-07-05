@@ -1,0 +1,11 @@
+{
+	"liferayDir": "/Users/albert.mas/liferay-ce-portal-7.4.3.75-ga75",
+	"webpack": {
+		"rules": [
+			{
+				"test": "src\\/.*\\.js$",
+				"use": "babel-loader"
+			}
+		]
+	}
+}
