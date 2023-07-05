@@ -3,6 +3,7 @@ import { HttpClient } from './utils/http-client';
 
 import { colors, chartsConfig } from './utils/utils';
 import { base_url } from './environments/environment.prod';
+import avances from './avances.json';
 
 export class HomeChart {
   
@@ -14,15 +15,16 @@ export class HomeChart {
     }
     
     init(){
-        this.data = {name: 'julio', age: 12};
+        this.data = avances;
         console.log('init landing -------------------',this.data);
-        this._http.get(`${base_url}/avances`).then(data => {
-            this.data = data;
-            console.log('data landing -------------------',data);
-            if(data && data.success) {this.printTabs(this.data.lista)};
-        }).catch(error => {
-        console.error('Error', error);
-        });
+        // this._http.get(`${base_url}/avances`).then(data => {
+        //     this.data = data;
+        //     console.log('data landing -------------------',data);
+        //     if(data && data.success) {this.printTabs(this.data.lista)};
+        // }).catch(error => {
+        //     console.error('Error', error);
+        // });
+        if(this.data && this.data.success) {this.printTabs(this.data.lista)};
     }
     printTabs(tabList) {
         console.log('printTabs landing -------------------');
@@ -95,10 +97,12 @@ export class HomeChart {
       getParsedData(data) {
         console.log(data);
         const dataCopy = JSON.parse(JSON.stringify(data));
+        // dataCopy = dataCopy.images = [];
         let result = JSON.parse(JSON.stringify(chartsConfig.find(config => config.id == data.widget)));
         dataCopy.categorias.forEach((cat, index) => {
           result.datasets[0].data.push(cat.valor);
           result.datasets[0].backgroundColor.push(cat.color ? cat.color : colors[index]);
+          result.datasets[0].images.push(cat.logo);
           result.labels.push(cat.titulo)
         });
         console.log(result);
@@ -112,6 +116,14 @@ export class HomeChart {
       //   var labelText = context.label;
       //   return labelText + ': ' + labelValue;
       // }
+
+      printLabel (data) {
+        console.log('printLabel');
+        let rgb = hexToRgb(data.dataset.backgroundColor[data.index]);
+        let threshold = 140;
+        let luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+        return luminance > threshold ? 'black' : 'white';
+      }
     
       printChart(data){
         console.log(data)
@@ -119,30 +131,25 @@ export class HomeChart {
         this.chart = new Chart('tab-content-chart', {
           type: data.type,
           data: data,
-          options: {
-            indexAxis: data.axis,
-            plugins: {
-              title: {
-                display: true,
-                text: data.titulo,
-                position: 'top',
-                color: '#005767',
-                font: {size: 16}
-              },
-              legend: {
-                display: this.show_legend,
-                position: 'bottom',
-              },
-              labels: {
-                render: 'percentage',
-                fontColor: function (data) {
-                  var rgb = hexToRgb(data.dataset.backgroundColor[data.index]);
-                  var threshold = 140;
-                  var luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-                  return luminance > threshold ? 'black' : 'white';
+            options: {
+                indexAxis: data.axis,
+                plugins: {
+                title: {
+                    display: true,
+                    text: data.titulo,
+                    position: 'top',
+                    color: '#005767',
+                    font: {size: 16}
                 },
-                precision: 2
-              }
+                legend: {
+                    display: this.show_legend,
+                    position: 'bottom',
+                    //   labels: {
+                    //     render: 'percentage',
+                    //     fontColor: this.printLabel,
+                    //     precision: 2
+                    //   }
+                }
             },
             responsive: true
           },
