@@ -1,9 +1,10 @@
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { HttpClient } from './utils/http-client';
 
 import { colors, chartsConfig } from './utils/utils';
 import { base_url } from './environments/environment.prod';
-import avances from './avances.json';
+// import avances from './avances.json';
 
 export class HomeChart {
   
@@ -12,19 +13,20 @@ export class HomeChart {
         this._http = new HttpClient();
         this.data;
         this.chart;
+        this.show_legend;
     }
     
     init(){
-        this.data = avances;
+        // this.data = avances;
         console.log('init landing -------------------',this.data);
-        // this._http.get(`${base_url}/avances`).then(data => {
-        //     this.data = data;
-        //     console.log('data landing -------------------',data);
-        //     if(data && data.success) {this.printTabs(this.data.lista)};
-        // }).catch(error => {
-        //     console.error('Error', error);
-        // });
-        if(this.data && this.data.success) {this.printTabs(this.data.lista)};
+        this._http.get(`${base_url}/avances`).then(data => {
+            this.data = data;
+            console.log('data landing -------------------',data);
+            if(data && data.success) {this.printTabs(this.data.lista)};
+        }).catch(error => {
+            console.error('Error', error);
+        });
+        // if(this.data && this.data.success) {this.printTabs(this.data.lista)};
     }
     printTabs(tabList) {
         console.log('printTabs landing -------------------');
@@ -88,6 +90,8 @@ export class HomeChart {
           let questionItem = `<li class="nav-item"><button class="nav-link ${questionIndex == 0 ? 'active' : ''}" aria-controls="TabSec${questionIndex}" aria-selected="${questionIndex == 0 ? 'true' : 'false'}" data-bs-toggle="tab" id="${questionIndex}-tab-sec" role="tab">${question.titulo}</button></li>`;
           secTab.insertAdjacentHTML('beforeend', questionItem);
           document.getElementById(`${questionIndex}-tab-sec`).onclick = () => {
+            // const q = document.getElementById(`${questionIndex}-tab-sec`);
+            // q.classList.add('active');
             this.printChart(this.getParsedData(question))
           }
         });
@@ -95,10 +99,9 @@ export class HomeChart {
       }
     
       getParsedData(data) {
-        console.log(data);
         const dataCopy = JSON.parse(JSON.stringify(data));
-        // dataCopy = dataCopy.images = [];
         let result = JSON.parse(JSON.stringify(chartsConfig.find(config => config.id == data.widget)));
+        this.show_legend = (result.type === 'bar');
         dataCopy.categorias.forEach((cat, index) => {
           result.datasets[0].data.push(cat.valor);
           result.datasets[0].backgroundColor.push(cat.color ? cat.color : colors[index]);
@@ -117,23 +120,59 @@ export class HomeChart {
       //   return labelText + ': ' + labelValue;
       // }
 
+    //   formatter: function(value, context) {
+    //     var logoUrl = 'ruta-imatge.png';  // Ruta de la imatge del logo
+    //     var label = context.chart.data.labels[context.dataIndex];  // Etiqueta de la dada actual
+    //     return '<img src="' + logoUrl + '"> ' + label;
+    //   },
+
+    hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+        } : null;
+    }
+
       printLabel (data) {
-        console.log('printLabel');
-        let rgb = hexToRgb(data.dataset.backgroundColor[data.index]);
+        let  rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.dataset.backgroundColor[data.dataIndex]);
+        rgb ? {r: parseInt(rgb[1], 16), g: parseInt(rgb[2], 16), b: parseInt(rgb[3], 16)} : null;
         let threshold = 140;
         let luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
         return luminance > threshold ? 'black' : 'white';
       }
     
       printChart(data){
-        console.log(data)
+        const ctx = document.getElementById('tab-content-chart');
         if(this.chart){this.chart.destroy()}
-        this.chart = new Chart('tab-content-chart', {
+        // this.chart = new Chart('tab-content-chart', { // no hace falta ctx
+        this.chart = new Chart(ctx, {
+          plugins: [ChartDataLabels],
           type: data.type,
           data: data,
             options: {
                 indexAxis: data.axis,
                 plugins: {
+                datalabels: {
+                    align: 'center', // center , start, end , right , left , bottom , top
+                    anchor: 'center',   //center , start, end
+                    // color: function(context) {
+                    //     return '#FFF';
+                    // //   return context.dataset.backgroundColor;
+                    // },
+                    color: this.printLabel,
+                    font: function(context) {
+                      var w = context.chart.width;
+                      return {
+                        size: w < 512 ? 12 : 14,
+                        weight: 'bold',
+                      };
+                    },
+                    formatter: function(value, context) {
+                      return context.chart.data.labels[context.dataIndex];
+                    }
+                },
                 title: {
                     display: true,
                     text: data.titulo,
@@ -144,11 +183,6 @@ export class HomeChart {
                 legend: {
                     display: this.show_legend,
                     position: 'bottom',
-                    //   labels: {
-                    //     render: 'percentage',
-                    //     fontColor: this.printLabel,
-                    //     precision: 2
-                    //   }
                 }
             },
             responsive: true

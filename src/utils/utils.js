@@ -1,9 +1,9 @@
 export const chartsConfig = [
     {id: '#donut180', type: 'doughnut', stacked: false, axis: 'x', labels: [], datasets: [{data: [], images:[], backgroundColor: [], circumference: 180, borderWidth: 1, rotation: 270, cutout: '50%'}]},
     {id: '#donut360', type: 'doughnut', stacked: false, axis: 'x', labels: [], datasets: [{data: [],images:[], backgroundColor: []}]},
-    {id: '#barh', type: 'bar', stacked: false, axis: 'x', labels: [], datasets: [{data: [], images:[], backgroundColor: []}]},
+    {id: '#barrasV', type: 'bar', stacked: false, axis: 'x', labels: [], datasets: [{data: [], images:[], backgroundColor: []}]},
     {id: '', type: 'bar', stacked: false, axis: 'x', labels: [], datasets: [{data: [], backgroundColor: [], images:[]}]},
-    {id: '#barh', type: 'bar', stacked: false, axis: 'y', labels: [], datasets: [{data: [], backgroundColor: [], images:[]}]},
+    {id: '#barrasH', type: 'bar', stacked: false, axis: 'y', labels: [], datasets: [{data: [], backgroundColor: [], images:[]}]},
 ]
 
 export const colorMatch = {
