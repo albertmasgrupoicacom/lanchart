@@ -101,8 +101,9 @@ export class HomeChart {
       getParsedData(data) {
         const dataCopy = JSON.parse(JSON.stringify(data));
         let result = JSON.parse(JSON.stringify(chartsConfig.find(config => config.id == data.widget)));
-        this.show_legend = (result.type === 'bar');
+        this.show_legend = false; //(result.type === 'bar');
         dataCopy.categorias.forEach((cat, index) => {
+          result.datasets[0].type = result.type;
           result.datasets[0].data.push(cat.valor);
           result.datasets[0].backgroundColor.push(cat.color ? cat.color : colors[index]);
           result.datasets[0].images.push(cat.logo);
@@ -126,24 +127,46 @@ export class HomeChart {
     //     return '<img src="' + logoUrl + '"> ' + label;
     //   },
       
-      labelFormatter(data) {
-        console.log(data);
-        return data.chart.data.labels[context.dataIndex];
+      labelFormatter(context) {
+        if(context.dataset.type === 'bar'){ return null;}
+        return context.chart.data.labels[context.dataIndex];
       }
 
       printLabel (data) {
         let  rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.dataset.backgroundColor[data.dataIndex]);
-        const rgbR = {r: parseInt(rgb[1], 16), g: parseInt(rgb[2], 16), b: parseInt(rgb[3], 16)};
-        let threshold = 140;
-        let luminance = 0.299 * rgbR.r + 0.587 * rgbR.g + 0.114 * rgbR.b;
-        return luminance > threshold ? 'black' : 'white';
+        if( rgb ) {
+            const rgbR = {r: parseInt(rgb[1], 16), g: parseInt(rgb[2], 16), b: parseInt(rgb[3], 16)};
+            let threshold = 140;
+            let luminance = 0.299 * rgbR.r + 0.587 * rgbR.g + 0.114 * rgbR.b;
+            return luminance > threshold ? 'black' : 'white';
+        } else {
+            return 'white';
+        }
       }
+
+      alignFunction(data) {
+        let align = 'center'
+        // if(data.dataset.type === 'bar') { align = 'end'}
+        return align;
+      }
+
+      anchorFunction(data) {
+        let anchor = 'center'
+        // if(data.dataset.type === 'bar') { anchor = 'end'}
+        return anchor;
+      }
+
+      fontFunction(context) {
+              var w = context.chart.width;
+              return {
+                size: w < 512 ? 12 : 14,
+                weight: 'bold',
+              };
+        }
     
       printChart(data){
-        // const ctx = document.getElementById('tab-content-chart');
         if(this.chart){this.chart.destroy()}
-        // this.chart = new Chart(ctx, {
-        this.chart = new Chart('tab-content-chart', { // no hace falta ctx
+        this.chart = new Chart('tab-content-chart', { 
           plugins: [ChartDataLabels],
           type: data.type,
           data: data,
@@ -151,30 +174,66 @@ export class HomeChart {
                 indexAxis: data.axis,
                 plugins: {
                 datalabels: {
-                    align: 'center', // center , start, end , right , left , bottom , top
-                    anchor: 'center',   //center , start, end
-                    // color: function(context) {
-                    //     return '#FFF';
-                    // //   return context.dataset.backgroundColor;
-                    // },
-                    color: this.printLabel,
-                    font: function(context) {
-                      var w = context.chart.width;
-                      return {
-                        size: w < 512 ? 12 : 14,
-                        weight: 'bold',
-                      };
-                    },
-                    // formatter: function(value, context) {
-                    //   return context.chart.data.labels[context.dataIndex];
-                    // }
-                    // formatter: this.labelFormatter(context)
-                    formatter: function(value, context) {
-                        var logoUrl = 'https://www.flaticon.com/free-icon/apple_731985?term=logo&page=1&position=8&origin=tag&related_id=731985';  // Ruta del logo
-                        var label = context.chart.data.labels[context.dataIndex];  
-                        return '<img src="' + logoUrl + '"> ' + label;
+                    labels: {
+                        name: data.type !== 'bar' ? {
+                          align: 'top',
+                          font: {size: 16},
+                          color: this.printLabel,
+                          font: this.fontFunction,
+                          formatter: function(value, context) {
+                                  if(context.dataset.type === 'bar'){ return value;}
+                                  return `${context.chart.data.labels[context.dataIndex]}`;
+                                }
+                        }: {
+                            align: this.alignFunction, //'center', // center , start, end , right , left , bottom , top
+                            anchor: this.anchorFunction, // 'center',   //center , start, end
+                            color: this.printLabel,
+                            font: this.fontFunction,
+                            formatter: function(value, context) {
+                              if(context.dataset.type === 'bar'){ return value;}
+                              return `${context.chart.data.labels[context.dataIndex]} ${value}%`;
+                            }
+                        },
+                        value: data.type !== 'bar' ? {
+                          align: 'bottom',
+                          borderColor: this.printLabel,
+                          borderWidth: 2,
+                          borderRadius: 4,
+                          color: this.printLabel,
+                          formatter: function(value, context) {
+                            if(context.dataset.type === 'bar'){ return value;}
+                            return `${value}%`;
+                          },
+                          padding: 4
+                        } : null
                     }
                 },
+                // datalabels: {
+                //     align: this.alignFunction, //'center', // center , start, end , right , left , bottom , top
+                //     anchor: this.anchorFunction, // 'center',   //center , start, end
+                //     // color: function(context) {
+                //     //     return '#FFF';
+                //     // //   return context.dataset.backgroundColor;
+                //     // },
+                //     color: this.printLabel,
+                //     font: function(context) {
+                //       var w = context.chart.width;
+                //       return {
+                //         size: w < 512 ? 12 : 14,
+                //         weight: 'bold',
+                //       };
+                //     },
+                //     formatter: function(value, context) {
+                //       if(context.dataset.type === 'bar'){ return value;}
+                //       return `${context.chart.data.labels[context.dataIndex]} ${value}%`;
+                //     }
+                //     // formatter: this.labelFormatter,
+                //     // formatter: function(value, context) {
+                //     //     var logoUrl = 'https://www.flaticon.com/free-icon/apple_731985?term=logo&page=1&position=8&origin=tag&related_id=731985';  // Ruta del logo
+                //     //     var label = context.chart.data.labels[context.dataIndex];  
+                //     //     return '<img src="' + logoUrl + '"> ' + label;
+                //     // }
+                // },
                 title: {
                     display: true,
                     text: data.titulo,
