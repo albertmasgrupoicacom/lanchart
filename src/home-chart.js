@@ -125,29 +125,25 @@ export class HomeChart {
     //     var label = context.chart.data.labels[context.dataIndex];  // Etiqueta de la dada actual
     //     return '<img src="' + logoUrl + '"> ' + label;
     //   },
-
-    hexToRgb(hex) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-        } : null;
-    }
+      
+      labelFormatter(data) {
+        console.log(data);
+        return data.chart.data.labels[context.dataIndex];
+      }
 
       printLabel (data) {
         let  rgb = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(data.dataset.backgroundColor[data.dataIndex]);
-        rgb ? {r: parseInt(rgb[1], 16), g: parseInt(rgb[2], 16), b: parseInt(rgb[3], 16)} : null;
+        const rgbR = {r: parseInt(rgb[1], 16), g: parseInt(rgb[2], 16), b: parseInt(rgb[3], 16)};
         let threshold = 140;
-        let luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+        let luminance = 0.299 * rgbR.r + 0.587 * rgbR.g + 0.114 * rgbR.b;
         return luminance > threshold ? 'black' : 'white';
       }
     
       printChart(data){
-        const ctx = document.getElementById('tab-content-chart');
+        // const ctx = document.getElementById('tab-content-chart');
         if(this.chart){this.chart.destroy()}
-        // this.chart = new Chart('tab-content-chart', { // no hace falta ctx
-        this.chart = new Chart(ctx, {
+        // this.chart = new Chart(ctx, {
+        this.chart = new Chart('tab-content-chart', { // no hace falta ctx
           plugins: [ChartDataLabels],
           type: data.type,
           data: data,
@@ -169,8 +165,14 @@ export class HomeChart {
                         weight: 'bold',
                       };
                     },
+                    // formatter: function(value, context) {
+                    //   return context.chart.data.labels[context.dataIndex];
+                    // }
+                    // formatter: this.labelFormatter(context)
                     formatter: function(value, context) {
-                      return context.chart.data.labels[context.dataIndex];
+                        var logoUrl = 'https://www.flaticon.com/free-icon/apple_731985?term=logo&page=1&position=8&origin=tag&related_id=731985';  // Ruta del logo
+                        var label = context.chart.data.labels[context.dataIndex];  
+                        return '<img src="' + logoUrl + '"> ' + label;
                     }
                 },
                 title: {
