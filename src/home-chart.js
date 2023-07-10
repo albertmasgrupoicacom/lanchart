@@ -172,6 +172,11 @@ export class HomeChart {
           data: data,
             options: {
                 indexAxis: data.axis,
+                // layout: {
+                //     padding: {
+                //         top: 0
+                //     }
+                // },
                 plugins: {
                 datalabels: {
                     labels: {
@@ -208,35 +213,9 @@ export class HomeChart {
                         } : null
                     }
                 },
-                // datalabels: {
-                //     align: this.alignFunction, //'center', // center , start, end , right , left , bottom , top
-                //     anchor: this.anchorFunction, // 'center',   //center , start, end
-                //     // color: function(context) {
-                //     //     return '#FFF';
-                //     // //   return context.dataset.backgroundColor;
-                //     // },
-                //     color: this.printLabel,
-                //     font: function(context) {
-                //       var w = context.chart.width;
-                //       return {
-                //         size: w < 512 ? 12 : 14,
-                //         weight: 'bold',
-                //       };
-                //     },
-                //     formatter: function(value, context) {
-                //       if(context.dataset.type === 'bar'){ return value;}
-                //       return `${context.chart.data.labels[context.dataIndex]} ${value}%`;
-                //     }
-                //     // formatter: this.labelFormatter,
-                //     // formatter: function(value, context) {
-                //     //     var logoUrl = 'https://www.flaticon.com/free-icon/apple_731985?term=logo&page=1&position=8&origin=tag&related_id=731985';  // Ruta del logo
-                //     //     var label = context.chart.data.labels[context.dataIndex];  
-                //     //     return '<img src="' + logoUrl + '"> ' + label;
-                //     // }
-                // },
                 title: {
                     display: true,
-                    text: data.titulo,
+                    text: data.titulo, // TODO: titulo??
                     position: 'top',
                     color: '#005767',
                     font: {size: 16}
