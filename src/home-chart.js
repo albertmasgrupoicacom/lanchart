@@ -52,17 +52,10 @@ export class HomeChart {
                   </div>
         
                   <div class="col-lg-9 col-xl-9">
-                    <div class="tab-content" id="SecTabContent">
+                    <div class="tab-content" style="background-color:#FFF" id="SecTabContent">
                       <canvas id="tab-content-chart"></canvas>
                     </div>
                   </div>
-                </div>
-        
-                <div class="dest-tabs order-1 order-lg-2">
-                  <div>
-                    <p>"Ya puede acceder al estudio definitivo del Barometro de febrero"</p>
-                  </div>
-                  <a href="#">Compartir</a>
                 </div>
               </div>
             </div>
@@ -74,7 +67,7 @@ export class HomeChart {
       printMainTab(tabList){
         let mainTab = document.getElementById('MainTab');
         tabList.forEach((tab, tabIndex) => {
-          let tabItem = `<li class="nav-item"><button class="nav-link ${tabIndex == 0 ? 'active' : ''}" aria-controls="MainTab${tabIndex}" aria-selected="${tabIndex == 0 ? 'true' : 'false'}" data-bs-toggle="tab" id="${tabIndex}-tab-main" role="tab" type="button">${tab.titulo}</button></li>`;
+          let tabItem = `<li class="nav-item ${tabIndex == 0 ? 'active' : ''}"><a class="nav-link" aria-controls="MainTab${tabIndex}" aria-selected="${tabIndex == 0 ? 'true' : 'false'}" data-bs-toggle="tab" id="${tabIndex}-tab-main" role="tab" type="a">${tab.titulo}</a></li>`;
           mainTab.insertAdjacentHTML('beforeend', tabItem);
           document.getElementById(`${tabIndex}-tab-main`).onclick = () => {
             this.printSecondTab(tab);
@@ -87,7 +80,8 @@ export class HomeChart {
         let secTab = document.getElementById(`SecTab`);
         secTab.innerHTML = '';
         tab.preguntas.forEach((question, questionIndex) => {
-          let questionItem = `<li class="nav-item"><button class="nav-link ${questionIndex == 0 ? 'active' : ''}" aria-controls="TabSec${questionIndex}" aria-selected="${questionIndex == 0 ? 'true' : 'false'}" data-bs-toggle="tab" id="${questionIndex}-tab-sec" role="tab">${question.titulo}</button></li>`;
+        //   let questionItem = `<li class="nav-item"><a class="nav-link ${questionIndex == 0 ? ' active' : ''}" aria-controls="TabSec${questionIndex}" aria-selected="${questionIndex == 0 ? 'true' : 'false'}" data-bs-toggle="tab" id="${questionIndex}-tab-sec" role="tab">${question.titulo}</a></li>`;
+          let questionItem = `<li class="nav-item ${questionIndex == 0 ? 'active' : ''}"><a class="nav-link" aria-controls="TabSec${questionIndex}" aria-selected="${questionIndex == 0 ? 'true' : 'false'}" data-bs-toggle="tab" id="${questionIndex}-tab-sec" role="tab">${question.titulo}</a></li>`;
           secTab.insertAdjacentHTML('beforeend', questionItem);
           document.getElementById(`${questionIndex}-tab-sec`).onclick = () => {
             // const q = document.getElementById(`${questionIndex}-tab-sec`);
@@ -109,23 +103,9 @@ export class HomeChart {
           result.datasets[0].images.push(cat.logo);
           result.labels.push(cat.titulo)
         });
-        console.log(result);
+        result.titulo = data.titulo;
         return result;
       }
-    
-      // labelf(context) {
-      //   console.log(context);
-      //   var labelIndex = context.dataIndex;
-      //   var labelValue = context.dataset.data[labelIndex];
-      //   var labelText = context.label;
-      //   return labelText + ': ' + labelValue;
-      // }
-
-    //   formatter: function(value, context) {
-    //     var logoUrl = 'ruta-imatge.png';  // Ruta de la imatge del logo
-    //     var label = context.chart.data.labels[context.dataIndex];  // Etiqueta de la dada actual
-    //     return '<img src="' + logoUrl + '"> ' + label;
-    //   },
       
       labelFormatter(context) {
         if(context.dataset.type === 'bar'){ return null;}
@@ -172,11 +152,6 @@ export class HomeChart {
           data: data,
             options: {
                 indexAxis: data.axis,
-                // layout: {
-                //     padding: {
-                //         top: 0
-                //     }
-                // },
                 plugins: {
                 datalabels: {
                     labels: {
